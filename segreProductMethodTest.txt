@@ -1,0 +1,11 @@
+load "segreProductMethod.m2";
+-- Example usage
+F3 = GF(3);
+myRing1 = F3[x_1 .. x_3];
+f = x_1^3;
+myRing2=F3[y_1 .. y_3];
+g = y_1^3;
+mySegreProductPresentation = segreProduct(f, g);
+
+z_(1,1)*z_(1,2)^2
+
