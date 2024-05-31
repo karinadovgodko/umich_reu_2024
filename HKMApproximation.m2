@@ -42,9 +42,7 @@ hkmApproximationComponent = (f, n, i) -> (
     
 
 
-    --Note: I believe the a module is finite dimensional iff it has finite length. I don't think this is a necessary error catch because R should always be finite-dimensional
-
-    --if not isFinite length R then error "The quotient of ring input1 by the ideal is not a finite dimensional vector space";
+    --Probably not needed here: if not isFinite length R then error "The quotient of ring input1 by the ideal is not a finite dimensional vector space";
 
     --also, for some reason numcols basis (i,R) is SIGNIFICANTLY faster than hilbertFunction(i,R). However, calling the hkmApproximationComponent iteratively is slower than the main method.
 
