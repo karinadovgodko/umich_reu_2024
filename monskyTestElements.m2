@@ -1,7 +1,7 @@
 getMonskyElts = (m) -> (
     GFm = GF(2^m, Variable => a);
     returnList = {(0,1)};
-    for i to 2^m-1 do (
+    for i to 2^m-2 do (
         x = a^i;
         n = 1;
         tempsum = x^n;
