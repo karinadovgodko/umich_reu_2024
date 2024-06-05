@@ -1,4 +1,4 @@
-load "monksyTestElements.m2";
+load "monskyTestElements.m2";
 hkmApproximation = (f,n) -> (
     if not (instance(f, RingElement))then error "Input1 must be a polynomial";
     if not (instance (n, ZZ) and n>0) then error "Input2 must be a positive integer";
@@ -88,13 +88,13 @@ hkmKernelAlpha = (alpha, n, i) -> (
     return hkmApproximationComponentKernel(g, n, i);
 )
 
-hkmKernelIndex = (m, j, n , i) -> (
+hkmKernelIndex = (j, m, n , i) -> (
     --m as in m(alpha),  j as in GF 2^j , quotienting by 2^nth powers of generators. returns i th degree part of kernel
-    alpha = getMonskyAlphas(j, m);
-    -- if alpha == sub(0, ring alpha) then error "no alpha of such m(alpha). try a different m(alpha)";
+    alpha = getMonskyAlpha(j, m);
+    --if alpha == sub(0, ring alpha) then error "no alpha of such m(alpha). try a different m(alpha)";
     -- FIX TEST
     return hkmKernelAlpha(alpha, n, i);
-)
+);
 
 
 
