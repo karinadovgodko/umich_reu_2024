@@ -1,3 +1,4 @@
+load "monksyTestElements.m2";
 hkmApproximation = (f,n) -> (
     if not (instance(f, RingElement))then error "Input1 must be a polynomial";
     if not (instance (n, ZZ) and n>0) then error "Input2 must be a positive integer";
@@ -53,7 +54,7 @@ hkmApproximationComponent = (f, n, i) -> (
 
 
 hkmApproximationComponentKernel = (f, n, i) -> (
-    -- compute dimension of ith degree component of kernel of multiplication by f (quotienting by nth powers of generators)
+    -- compute dimension of ith degree component of kernel of multiplication by f (quotienting by char^n th powers of generators)
     if not (instance(f, RingElement) )then error "Input1 must be a polynomial";
     if not (instance (n, ZZ) and n>0) then error "Input2 must be a positive integer";
     S = ring f;
@@ -79,6 +80,24 @@ hkmApproximationComponentKernel = (f, n, i) -> (
 
     return numgens source basis(i, phiKer);
 );
+
+hkmKernelAlpha = (alpha, n, i) -> (
+    if not (instance (alpha, RingElement) and char (ring alpha) ==2) then error "alpha must be in some GF(2,k)";
+    myRing = (ring alpha)[x,y,z];
+    g = alpha*x^2*y^2+z*(x^3+y^3+z^3+x*y*z);
+    return hkmApproximationComponentKernel(g, n, i);
+)
+
+hkmKernelIndex = (m, j, n , i) -> (
+    --m as in m(alpha),  j as in GF 2^j , quotienting by 2^nth powers of generators. returns i th degree part of kernel
+    alpha = getMonskyAlphas(j, m);
+    -- if alpha == sub(0, ring alpha) then error "no alpha of such m(alpha). try a different m(alpha)";
+    -- FIX TEST
+    return hkmKernelAlpha(alpha, n, i);
+)
+
+
+
 
 algebraicHKExample = (f, n) -> (
     if not (instance(f, RingElement) and (numgens ring f) == 1) or ideal((gens ring f)#0) == ring f then error "Input1 must be a polynomial in one variable";
