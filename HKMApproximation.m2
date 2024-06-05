@@ -88,11 +88,9 @@ hkmKernelAlpha = (alpha, n, i) -> (
     return hkmApproximationComponentKernel(g, n, i);
 )
 
-hkmKernelIndex = (j, m, n , i) -> (
-    --m as in m(alpha),  j as in GF 2^j , quotienting by 2^nth powers of generators. returns i th degree part of kernel
-    alpha = getMonskyAlpha(j, m);
-    --if alpha == sub(0, ring alpha) then error "no alpha of such m(alpha). try a different m(alpha)";
-    -- FIX TEST
+hkmKernelIndex = (m, n , i) -> (
+    --m as in m(alpha), quotienting by 2^nth powers of generators. returns i th degree part of kernel
+    alpha = getMonskyAlpha(m);
     return hkmKernelAlpha(alpha, n, i);
 );
 
