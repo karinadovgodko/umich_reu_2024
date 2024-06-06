@@ -1,3 +1,4 @@
+
 load "monskyTestElements.m2";
 hkmApproximation = (f,n) -> (
     if not (instance(f, RingElement))then error "Input1 must be a polynomial";
@@ -53,7 +54,7 @@ hkmApproximationComponent = (f, n, i) -> (
 
 
 
-hkmApproximationComponentKernel = (f, n, i) -> (
+hkmComponentKernel = (f, n, i) -> (
     -- compute dimension of ith degree component of kernel of multiplication by f (quotienting by char^n th powers of generators)
     if not (instance(f, RingElement) )then error "Input1 must be a polynomial";
     if not (instance (n, ZZ) and n>0) then error "Input2 must be a positive integer";
@@ -81,17 +82,58 @@ hkmApproximationComponentKernel = (f, n, i) -> (
     return numgens source basis(i, phiKer);
 );
 
+hkmComponentKernelBasis = (f, n, i) -> (
+    -- compute dimension of ith degree component of kernel of multiplication by f (quotienting by char^n th powers of generators)
+    if not (instance(f, RingElement) )then error "Input1 must be a polynomial";
+    if not (instance (n, ZZ) and n>0) then error "Input2 must be a positive integer";
+    S = ring f;
+    Schar = char(S);
+
+    if not (isPrime(Schar)) then error "Input1 must have coefficients in prime characteristic";
+
+    Sgens = gens S;
+    powernumber = Schar^n;
+    myList = {};
+     for term in Sgens do (
+        myList = append(myList, term^powernumber);
+    );
+
+
+    myIdeal = ideal(myList);
+    R = S/myIdeal;
+    T = module R;
+
+    phi = map(T, T, sub(f, R));
+
+    phiKer = ker phi;
+
+    return basis(i, phiKer);
+);
+
 hkmKernelAlpha = (alpha, n, i) -> (
     if not (instance (alpha, RingElement) and char (ring alpha) ==2) then error "alpha must be in some GF(2,k)";
     myRing = (ring alpha)[x,y,z];
     g = alpha*x^2*y^2+z*(x^3+y^3+z^3+x*y*z);
-    return hkmApproximationComponentKernel(g, n, i);
-)
+    return hkmComponentKernel(g, n, i);
+);
+
+hkmKernelAlphaBasis = (alpha, n, i) -> (
+    if not (instance (alpha, RingElement) and char (ring alpha) ==2) then error "alpha must be in some GF(2,k)";
+    myRing = (ring alpha)[x,y,z];
+    g = alpha*x^2*y^2+z*(x^3+y^3+z^3+x*y*z);
+    return hkmComponentKernelBasis(g, n, i);
+);
 
 hkmKernelIndex = (m, n , i) -> (
     --m as in m(alpha), quotienting by 2^nth powers of generators. returns i th degree part of kernel
     alpha = getMonskyAlpha(m);
     return hkmKernelAlpha(alpha, n, i);
+);
+
+hkmKernelIndexBasis = (m, n , i) -> (
+    --m as in m(alpha), quotienting by 2^nth powers of generators. returns i th degree part of kernel
+    alpha = getMonskyAlpha(m);
+    return hkmKernelAlphaBasis(alpha, n, i);
 );
 
 
