@@ -62,10 +62,10 @@ printKernelsBasis = (name, m , upperFrob) -> (
         f <<  "------------ Frobenius Iteration = " << i  <<  "--------------" << endl;
         myalpha = getMonskyAlpha (m);
         R = ring myalpha[x,y,z]/ideal(x^(2^i),y^(2^i),z^(2^i));
-        g = alpha*x^2*y^2+z*(x^3+y^3+z^3+x*y*z);
+        g = myalpha*x^2*y^2+z*(x^3+y^3+z^3+x*y*z);
         psi = map(R^1,R^1, g);
         kernelGens = gens kernel(psi);
-        f <<  "------------ Kernel Generators as an Ideal = " << kernelGens  <<  "--------------" << endl;
+        f <<  "------------ u = " << kernelGens_(0,0)  <<  "--------------" << endl;
         r = i - m;
         for j from   3*2^(i-1) - 4 - 2^(r-1) to 3*2^(i-1) - 4 do (
             
