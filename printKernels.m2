@@ -51,3 +51,25 @@ printKernelsRange = (name, m1, m2, upperFrob, range) -> (
     f << close;
     );
   
+  --name is the name of the file. The method gives basis elements for the kernels of multiplication by  g_alpha with m(alpha)=m for frobenius iterates from m+1 to upperFrob.
+printKernelsBasis = (name, m , upperFrob) -> (
+    if not (upperFrob > m) then error "more frobenius iterations needed";
+    f = name << ""; 
+
+  
+    for i from m + 1 to upperFrob do (
+        -- ith Frobenius iteration 
+        f <<  "------------ Frobenius Iteration = " << i  <<  "--------------" << endl;
+
+        r = i - m;
+        for j from   3*2^(i-1) - 4 - 2^(r-1) to 3*2^(i-1) - 4 do (
+            
+            -- jth degree component
+            base = hkmKernelIndexBasis(m, i, j);
+
+            f << base << endl;
+        );
+    );
+    f << close;
+    );
+  
