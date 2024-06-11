@@ -44,3 +44,22 @@ getMonskyAlpha = (m) -> (
         n += 1; 
     )
 );
+
+getTwoMonskyElementsInSameField = (m1, m2) -> (
+
+n = 1;
+while true do (
+    alpha = 0;
+    beta = 0;
+
+    listPairs = getMonskyElts(n);
+
+    for pair in listPairs do (
+        if pair#1 == m1 then alpha = pair#0; 
+        if pair#1 == m2 then beta = pair#0;
+    );
+
+    if alpha != 0 and beta != 0 then return {alpha, beta};
+    n += 1; 
+);
+);
