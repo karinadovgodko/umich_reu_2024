@@ -1,4 +1,4 @@
-load "monskyTestElements.m2"
+load "monskyTestElements.m2";
 
 
 baseSegreRing = (f, g) -> (
@@ -55,7 +55,7 @@ segreProduct = (f, g) -> (
 );
 
 
-segreProductMultiplicity(m1, m2, n) -> (
+segreProductMultiplicity = (m1, m2, n) -> (
     alphas = getTwoMonskyElementsInSameField(m1, m2);
     alpha = alphas#0; 
     beta = alphas#1; 
@@ -77,4 +77,8 @@ segreProductMultiplicity(m1, m2, n) -> (
     d = dim segreRing; 
 
     return (degree R)/(2^(n*d));
+);
+
+actualSegreProductMultiplicity = (m1, m2) -> (
+    
 );
