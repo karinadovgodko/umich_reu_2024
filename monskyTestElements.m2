@@ -24,10 +24,10 @@ getMonskyAlpha = (m) -> (
     if not (instance(m, ZZ) and m>0 ) then error "Inputs must be positive integers with the second at most twice the first";
 
     if m == 1 then return sub(0, GF(2)); 
-    n = 1; 
+    numberN = 1; 
     while true do (
-        privateGF2n = GF(2^n, Variable => a);
-        for j to 2^n-2 do (
+        privateGF2n = GF(2^numberN , Variable => a);
+        for j to 2^numberN -2 do (
 
             elt = a^j;
             k = 0;
@@ -41,18 +41,18 @@ getMonskyAlpha = (m) -> (
             if k+1 == m then return elt;
 
         );
-        n += 1; 
+        numberN += 1; 
     )
 );
 
 getTwoMonskyElementsInSameField = (m1, m2) -> (
 
-n = 1;
+numberN  = 1;
 while true do (
     alpha = 0;
     beta = 0;
 
-    listPairs = getMonskyElts(n);
+    listPairs = getMonskyElts(numberN );
 
     for pair in listPairs do (
         if pair#1 == m1 then alpha = pair#0; 
@@ -60,6 +60,6 @@ while true do (
     );
 
     if alpha != 0 and beta != 0 then return {alpha, beta};
-    n += 1; 
+    numberN += 1; 
 );
 );

@@ -55,7 +55,7 @@ segreProduct = (f, g) -> (
 );
 
 
-segreProductMultiplicity = (m1, m2, n) -> (
+segreProductMultiplicityAlgebraic = (m1, m2, n) -> (
     alphas = getTwoMonskyElementsInSameField(m1, m2);
     alpha = alphas#0; 
     beta = alphas#1; 
@@ -79,6 +79,57 @@ segreProductMultiplicity = (m1, m2, n) -> (
     return (degree R)/(2^(n*d));
 );
 
-actualSegreProductMultiplicity = (m1, m2) -> (
-    return 2^(-2*m1-m2)-2/(2^(m1+2*m2))+18/(2^(m1+m2))+3/(4^(m1))-1/8^m1 - 2/(3*8^m2)-9/(4^m2)+12-1/(3*2^m1)+1/(3*2^m2);
+segreProductMultiplicityTranscendentalAlgebraic = (m, n) -> (
+    alpha = getMonskyAlpha(m1);
+    ring1 = ring alpha;
+    bigring = ring1[T];
+    k = frac bigring;
+    myRing = k[x_1..x_3];
+    g1 = alpha*x_1^2*x_2^2+x_3*(x_1^3+x_2^3+x_3^3+x_1*x_2*x_3);
+    g2 = T*x_1^2*x_2^2+x_3*(x_1^3+x_2^3+x_3^3+x_1*x_2*x_3);
+
+    segreRing = segreProduct(g1, g2);
+
+
+    Sgens = gens segreRing;
+    q = 2^n;
+    myList = {};
+     for term in Sgens do (
+        myList = append(myList, term^q);
+    );
+    myIdeal = ideal(myList);
+    R = module(segreRing)/module(myIdeal);
+
+    d = dim segreRing; 
+
+    return (degree R)/(2^(n*d));
 );
+
+
+segreProductMultiplicityTranscendental = (n) -> (
+    bigring = GF(2)[S, T];
+    k = frac bigring;
+    myRing = k[x_1..x_3];
+    g1 = S*x_1^2*x_2^2+x_3*(x_1^3+x_2^3+x_3^3+x_1*x_2*x_3);
+    g2 = T*x_1^2*x_2^2+x_3*(x_1^3+x_2^3+x_3^3+x_1*x_2*x_3);
+
+    segreRing = segreProduct(g1, g2);
+
+
+    Sgens = gens segreRing;
+    q = 2^n;
+    myList = {};
+     for term in Sgens do (
+        myList = append(myList, term^q);
+    );
+    myIdeal = ideal(myList);
+    R = module(segreRing)/module(myIdeal);
+
+    d = dim segreRing; 
+
+    return (degree R)/(2^(n*d));
+);
+
+
+
+
