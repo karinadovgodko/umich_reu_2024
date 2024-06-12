@@ -80,5 +80,5 @@ segreProductMultiplicity = (m1, m2, n) -> (
 );
 
 actualSegreProductMultiplicity = (m1, m2) -> (
-    
+    return 2^(-2*m1-m2)-2/(2^(m1+2*m2))+18/(2^(m1+m2))+3/(4^(m1))-1/8^m1 - 2/(3*8^m2)-9/(4^m2)+12-1/(3*2^m1)+1/(3*2^m2);
 );
