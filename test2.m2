@@ -1,27 +1,58 @@
-load "monskyTestElements.m2";
+load "HKMApproximation.m2";
 
-m=2;
-alpha = getMonskyAlpha(m)
-R = ring alpha [x,y,z]
-g = alpha*x^2*y^2+z*(x^3+y^3+z^3+x*y*z)
-r=1
-n= m+r
+--load "segreProductMethod.m2";
 
-halfq = 2^(n-1)
-q=2*halfq
-S = R/ ideal(x^q,y^q, z^q)
-T = module S
 
-phi = map (T,T, sub(g, S))
-kerPhi = ker phi
-gens kerPhi
-(gens kerPhi)_(0,0)
-entries basis(3*halfq-4-2^(r-1), kerPhi)
-gens source basis (3*halfq-4-2^(r-1), kerPhi)
-basis(3*halfq-4-2^(r-1), kerPhi)
+l=2;
+r=4;
+n=2*l+r;
+halfq=2^(n-1);
+q=2*halfq;
 
-for j from   3*halfq - 4 - 2^(r-1) to 3*halfq - 4 do (
-        -- jth degree component
-        returnNum = numgens source basis (j, kerPhi);
-        print(returnNum);
-        );
+myField = GF(2, 2, Variable => a);
+alpha = a;
+myPolyRing = myField [x,y,z];
+Ax = x^2+y*z;
+Ay = y^2+x*z;
+h = alpha*z^4+Ax * Ay;
+
+myIdeal = ideal(x^q,y^q,z^q);
+
+R = myPolyRing/myIdeal;
+
+--  dim (myPolyRing/ideal(h))
+
+phi = map(R^1,R^1, h);
+
+kerPhi = ker phi;
+
+u = (gens kerPhi)_(0,0)
+
+basisTestElt = (a,b,c,i) -> (
+    if not b== 0 or b==1 then error "b must be 0 or 1";
+    return sub((Ax+Ay)^i*x^a*y^b*z^c*u, R);
+);
+
+basisTestElt(1,0,0,0)
+
+-- cokerPhi = coker phi;
+
+
+
+
+
+
+-- mySum = 0;
+
+-- for i to 3 * q-3 do (
+--     mySum += numgens source basis (i, kerPhi);
+-- )
+
+-- mySum
+
+-- 3*4^n+4^r
+-- mySum -( 3*4^n+4^r)
+
+-- for s to 3+2^(r-1) do (
+--     print ("s = "| s , " dimension of kernel ="| numgens source basis (3*halfq-7-2^(r-1)+s, kerPhi));
+-- );
